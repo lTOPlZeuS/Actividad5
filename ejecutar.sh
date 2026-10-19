@@ -16,6 +16,11 @@ python -m pip install -q --upgrade pip
 python -m pip install -q -r requirements.txt
 python -m pip freeze > requirements-lock.txt
 
+if ! python -c "import xgboost" 2>/dev/null; then
+  echo "!! XGBoost no pudo cargarse. En macOS suele faltar OpenMP: ejecuta 'brew install libomp' y vuelve a correr este script."
+  exit 1
+fi
+
 echo ">> Pruebas unitarias de limpieza"
 python -m pytest -q tests
 
