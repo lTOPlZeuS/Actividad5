@@ -1,0 +1,48 @@
+{
+  "esquema": "RepeatedKFold k=5 x 5 repeticiones (25 pliegues pareados)",
+  "friedman_rmse": {
+    "estadistico": 11.759999999999991,
+    "p_valor": 0.0027947852750368567
+  },
+  "pares": [
+    {
+      "par": "ridge vs random_forest",
+      "dif_media_rmse": -28.21184003382572,
+      "t_nadeau_bengio": -0.8195965865922211,
+      "p_t": 0.42051131171734324,
+      "wilcoxon_W": 87.0,
+      "p_wilcoxon": 0.04215019941329956,
+      "pliegues_gana_ridge": 16.0,
+      "p_t_holm": 0.8410226234346865,
+      "p_wilcoxon_holm": 0.08430039882659912,
+      "significativo_5pct": false,
+      "pliegues_gana_random_forest": NaN
+    },
+    {
+      "par": "ridge vs xgboost",
+      "dif_media_rmse": 3.100118332457823,
+      "t_nadeau_bengio": 0.11180567498415556,
+      "p_t": 0.9119073323219831,
+      "wilcoxon_W": 149.0,
+      "p_wilcoxon": 0.7309892177581787,
+      "pliegues_gana_ridge": 11.0,
+      "p_t_holm": 0.9119073323219831,
+      "p_wilcoxon_holm": 0.7309892177581787,
+      "significativo_5pct": false,
+      "pliegues_gana_random_forest": NaN
+    },
+    {
+      "par": "random_forest vs xgboost",
+      "dif_media_rmse": 31.311958366283545,
+      "t_nadeau_bengio": 1.8989522567338224,
+      "p_t": 0.06965677758703472,
+      "wilcoxon_W": 22.0,
+      "p_wilcoxon": 3.1948089599609375e-05,
+      "pliegues_gana_ridge": NaN,
+      "p_t_holm": 0.20897033276110416,
+      "p_wilcoxon_holm": 9.584426879882812e-05,
+      "significativo_5pct": false,
+      "pliegues_gana_random_forest": 3.0
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "dataframe_split": {
+    "columns": [
+      "age",
+      "sex",
+      "bmi",
+      "children",
+      "smoker",
+      "region",
+      "obese",
+      "smoker_obese"
+    ],
+    "data": [
+      [
+        42,
+        "female",
+        24.985,
+        2,
+        "no",
+        "northwest",
+        0,
+        0
+      ],
+      [
+        64,
+        "male",
+        39.16,
+        1,
+        "no",
+        "southeast",
+        1,
+        0
+      ],
+      [
+        53,
+        "male",
+        29.48,
+        0,
+        "no",
+        "southeast",
+        0,
+        0
+      ],
+      [
+        37,
+        "male",
+        36.19,
+        0,
+        "no",
+        "southeast",
+        1,
+        0
+      ],
+      [
+        18,
+        "female",
+        38.28,
+        0,
+        "no",
+        "southeast",
+        1,
+        0
+      ]
+    ]
+  }
+}

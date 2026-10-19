@@ -77,16 +77,14 @@ SCORING = {
 # --------------------------------------------------------------------------
 # Definición de modelos y espacios de búsqueda
 # --------------------------------------------------------------------------
-def _identidad(x):
-    return x
-
-
 def transformador_log():
     return FunctionTransformer(np.log1p, inverse_func=np.expm1, check_inverse=False)
 
 
 def transformador_identidad():
-    return FunctionTransformer(_identidad, inverse_func=_identidad, check_inverse=False)
+    # func=None equivale a la identidad y no requiere funciones propias, lo que
+    # mantiene el modelo serializable con skops (formato seguro de MLflow 3).
+    return FunctionTransformer(check_inverse=False)
 
 
 def definir_modelos(semilla: int) -> dict:
@@ -178,12 +176,42 @@ def git_commit() -> str:
 
 
 def log_modelo(estimador, X_ejemplo, y_pred_ejemplo, nombre: str):
+    """Registra el modelo en MLflow.
+
+    MLflow 3 serializa scikit-learn con skops, que solo carga tipos de una lista
+    de confianza. Se calcula esa lista y se acepta únicamente si todos los tipos
+    provienen de bibliotecas conocidas; si skops no puede serializar el pipeline
+    (p. ej. XGBoost), se usa cloudpickle como respaldo y se deja constancia en
+    la etiqueta 'formato_serializacion'.
+    """
     firma = infer_signature(X_ejemplo, y_pred_ejemplo)
-    kwargs = dict(sk_model=estimador, signature=firma, input_example=X_ejemplo.head(5))
-    try:  # MLflow >= 3
-        return mlflow.sklearn.log_model(name=nombre, **kwargs)
-    except TypeError:  # MLflow 2.x
-        return mlflow.sklearn.log_model(artifact_path=nombre, **kwargs)
+    base = dict(sk_model=estimador, signature=firma, input_example=X_ejemplo.head(5))
+    permitidos = ("numpy.", "sklearn.", "xgboost.", "scipy.", "builtins.", "collections.")
+
+    intentos = []
+    try:
+        import skops.io as sio
+        no_confiables = sio.get_untrusted_types(data=sio.dumps(estimador))
+        if all(t.startswith(permitidos) for t in no_confiables):
+            intentos.append(("skops", {"skops_trusted_types": no_confiables}))
+    except Exception:
+        pass
+    intentos.append(("cloudpickle", {"serialization_format": "cloudpickle"}))
+
+    ultimo_error = None
+    for formato, extra in intentos:
+        try:
+            try:  # MLflow >= 3
+                info = mlflow.sklearn.log_model(name=nombre, **base, **extra)
+            except TypeError:  # MLflow 2.x
+                extra2 = {k: v for k, v in extra.items() if k != "skops_trusted_types"}
+                info = mlflow.sklearn.log_model(artifact_path=nombre, **base, **extra2)
+            mlflow.set_tag("formato_serializacion", formato)
+            return info
+        except Exception as e:  # noqa: BLE001
+            ultimo_error = e
+            print(f"  [aviso] no se pudo guardar con {formato}: {str(e)[:160]}")
+    raise ultimo_error
 
 
 def estilo():

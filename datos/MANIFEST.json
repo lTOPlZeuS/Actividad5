@@ -5,11 +5,11 @@
     "filas": 1338,
     "columnas": 7,
     "descripcion": "Datos originales sin modificar (Medical Cost Personal Datasets)",
-    "generado_utc": "2026-10-19T02:01:28Z",
+    "generado_utc": "2026-10-19T02:28:07Z",
     "version": "1.0.0",
     "fuente": "https://github.com/stedy/Machine-Learning-with-R-datasets/blob/master/insurance.csv",
     "commit_fuente": "ff933238d9c30da179b7e3ad4b6ca938d67efc53",
-    "licencia": "Datos públicos del libro 'Machine Learning with R' (B. Lantz); réplica en Kaggle: mirichoi0218/insurance"
+    "origen": "Dataset público del libro 'Machine Learning with R' (B. Lantz); réplica en Kaggle: mirichoi0218/insurance"
   },
   "datos_limp": {
     "archivo": "datos/datos_limp/insurance_limpio.csv",
@@ -17,7 +17,7 @@
     "filas": 1337,
     "columnas": 9,
     "descripcion": "Datos limpios: esquema validado, texto estandarizado, nulos tratados, duplicados eliminados, reglas de negocio y variables derivadas",
-    "generado_utc": "2026-10-19T02:01:28Z",
+    "generado_utc": "2026-10-19T02:28:07Z",
     "version": "1.1.0",
     "derivado_de": "datos_ini",
     "script": "fuentes/datos_prep.py"

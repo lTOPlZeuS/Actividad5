@@ -1,0 +1,23 @@
+{
+  "modelo__n_estimators": [
+    "200",
+    "500"
+  ],
+  "modelo__max_depth": [
+    "2",
+    "3",
+    "4"
+  ],
+  "modelo__learning_rate": [
+    "0.03",
+    "0.1"
+  ],
+  "modelo__subsample": [
+    "0.8",
+    "1.0"
+  ],
+  "modelo__min_child_weight": [
+    "1",
+    "5"
+  ]
+}

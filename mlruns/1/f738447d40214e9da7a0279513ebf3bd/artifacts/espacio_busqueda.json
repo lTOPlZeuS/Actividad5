@@ -1,0 +1,17 @@
+{
+  "transformer": [
+    "identidad",
+    "log1p"
+  ],
+  "regressor__poly__degree": [
+    "1",
+    "2"
+  ],
+  "regressor__modelo__alpha": [
+    "0.01",
+    "0.1",
+    "1.0",
+    "10.0",
+    "100.0"
+  ]
+}
